@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="res/images/icon.ico">
+  <link href="/css/style.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <title>NeWind™</title>
+</head>
+
+<body>
+  
+<div id="userData" data-user='<%= JSON.stringify(user) %>'></div>
+
+  <nav>
+    <div class="navbar">
+      <div class="logo"><a href="#">NeWind™</a></div>
+      <ul class="nav-links">
+        <li><a href="profile">Profile</a></li>
+        <li><a href="discover">Discover</a></li>
+        <li><a href="meet">Meet</a></li>
+        <li><a href="/">About</a></li>
+      </ul>
+      <button class="mobile"><i class="fa fa-bars"></i></button>
+      <div class="profile">
+        <button class="escape"><i class="fa fa-power-off"></i></button>
+        <button class="log"><i class="fa fa-key"></i></button>
+      </div>
+    </div>
+    <div class="deco"></div>
+  </nav>
+
+  <div class="infos">
+    <div onclick="location.href='discover';" class="card">
+      <div class="top"></div>
+      <div class="avatar-holder">
+        <!-- Check if profileImage exists before rendering the image -->
+        <% if (user.profileImage) { %>
+          <!-- Embed user profile image using EJS syntax -->
+          <img src="/uploads/<%= user.profileImage %>" alt="User Profile Image">
+        <% } else { %>
+          <!-- Provide a default image or placeholder if profileImage doesn't exist -->
+          <img src="/images/default.png" alt="Default Profile Image">
+        <% } %>
+      </div>
+      <div class="name">
+        <%= user.username %>
+      </div>
+      <div class="description">
+        <%= user.bio %>
+      </div>
+    </div>
+    <div class="second">
+      <div class="card2">
+        <div class="top">
+          <p class="prf">
+            Your Profile
+          </p>
+          <button onclick="location.href='edit'">
+            <i class="fa fa-edit"></i>
+          </button>
+        </div>
+        <div class="all">
+          <div class="sections">
+            <table>
+              <tr>
+                <td><button onclick="changeContent(1)"><i class="fa fa-heart"></i> Marital status</button></td>
+              </tr>
+              <tr>
+                <td><button onclick="changeContent(2)"><i class="fa fa-suitcase"></i> Professional status</button></td>
+              </tr>
+              <tr>
+                <td><button onclick="changeContent(3)"><i class="fa fa-bullseye"></i> Goal</button></td>
+              </tr>
+              <tr>
+                <td><button onclick="changeContent(4)"><i class="fa fa-magic"></i> Hobbies</button></td>
+              </tr>
+              <tr>
+                <td><button onclick="changeContent(5)" class="last"><i class="fa fa-address-book"></i> Contact</button></td>
+              </tr>
+            </table>
+          </div>
+          <div class="content">
+
+          </div>
+        </div>
+      </div>
+      <div class="card3">
+        <div class="top">
+          <p>
+            Statistics
+          </p>
+        </div>
+        <div class="content2">
+          <p>Discovery rate</p>
+          <p>Accept rate</p>
+          <p>Reject rate</p>
+          <div class="progress">
+            <div class="barOverflow">
+              <div class="bar"></div>
+            </div>
+            <span><%= user.discovery %></span>%
+          </div>
+          <div class="progress">
+            <div class="barOverflow">
+              <div class="bar"></div>
+            </div>
+            <span><%= user.accept %></span>%
+          </div>
+          <div class="progress">
+            <div class="barOverflow">
+              <div class="bar"></div>
+            </div>
+            <span><%= user.reject %></span>%
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+<script type="text/javascript " src="/js/script.js "></script>
+
+</html>

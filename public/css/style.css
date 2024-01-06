@@ -1,0 +1,1030 @@
+@import url('https://fonts.googleapis.com/css?family=Dancing+Script');
+@import url('https://fonts.googleapis.com/css?family=Cherry+Swash');
+@import url('https://fonts.googleapis.com/css?family=Roboto:500');
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+:root{
+  --white: #F3F8FF;
+  --black: #22092C;
+  --red: #BE3144;
+  --brown: #872341;
+  --logo: #F9DEC9;
+}
+
+body {
+  background-image: linear-gradient(var(--logo) 0%, white 80%);
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+nav{
+  height: 70px;
+  width: 100%;
+  background-image: linear-gradient(var(--red),var(--brown));
+  box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+  margin-bottom: 5px;
+}
+
+nav .navbar{
+  display: flex;
+  align-items: center;
+  height: 100%;
+  margin: auto;
+  padding: 0 30px;
+  justify-content: space-between;
+  font-family: 'Cherry Swash';
+  overflow-x: auto;
+}
+
+.logo a {
+  font-family: 'Dancing Script';
+  font-weight: 1000;
+  color: var(--logo);
+  text-decoration: none;
+  font-size: 36px;
+}
+.logo a:hover {
+    color: linear-gradient(var(--logo), var(--black));
+    transition: 0.5s;
+}
+
+  .deco {
+    height: 5px;
+    background-color: var(--black);
+  }
+
+  .infos {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+  }
+
+  .show {
+    display: none;
+  }
+
+  @media only screen and (max-width: 740px) {
+    .mobile {
+      position: absolute;
+      right: 20px;
+      top: 20px;
+      background-color: rgb(0, 0, 0, 0);
+      border-style: none;
+      color: var(--white);
+      font-size: 30px;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+    .nav-links,.profile {
+      display: none;
+    }
+  }
+  @media only screen and (min-width: 740px) {
+    .navbar .nav-links {
+      display: flex;
+      text-decoration: none;
+      overflow: hidden;
+    }
+   
+    .navbar .nav-links li{
+      margin: 0 10px;
+      list-style: none;
+      display: flex;
+    }
+    .navbar .nav-links a {
+      font-size: 20px;
+      font-weight: 400;
+      text-decoration: none;
+      color: var(--white);
+      margin-top: 8px;
+    }
+   
+    
+    .navbar .nav-links a::after {
+       content: '';
+       display: block;
+       width: 0;
+       height: 3px;
+       margin-top: 2px;
+       background: var(--black);
+       transition: width .3s;
+     }
+     
+     .navbar .nav-links a:hover::after {
+       width: 100%;
+       transition: width .3s;
+     }
+
+     .profile button {
+      margin: 0 10px;
+      font-size: 22px;
+      text-decoration: none;
+      color: var(--white);
+      background-color: rgb(0, 0, 0, 0);
+      border-style: none;
+      &:hover {
+        cursor: pointer;
+        color: var(--black);
+        transition: 0.05s;
+      }
+     }
+     .profile .log {
+      margin-right: 0;
+     }
+     
+    .mobile {
+      display: none;
+    }
+  }
+  
+  .card {
+    /*** au lieu de width: 30% ****/
+    min-width: 30%;
+    max-width: 30%;
+    /******************************/
+    cursor: pointer;
+    height: 100%;
+    -break: break-;
+    margin: 20px;
+    margin-left: 4%;
+    border-radius: 10px;
+    border: 2px solid black;
+    box-shadow: 0 10px 25px 5px rgba(244, 202, 202, 0.2);
+    background-image: linear-gradient(#151515,var(--black));
+    overflow: hidden;
+    .avatar-holder {
+      margin: auto;
+      margin-top: -40px;
+      border-radius: 50%;
+      width: 100px;
+      height: 100px;
+      box-shadow: 0 0 0 5px #151515,
+                  inset 0 0 0 5px #000000,
+                  inset 0 0 0 5px #000000,
+                  inset 0 0 0 5px #000000,
+                  inset 0 0 0 5px #000000,;
+      background: var(--logo);
+      border: 4px solid var(--black);
+      overflow: hidden;
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+    .name {
+      margin: auto;
+      margin-top: 10px;
+      width: inherit;
+      height: 40px;
+      text-align: center;
+      
+        color: var(--logo);
+        text-decoration: none;
+        font-family: 'Cherry Swash';
+        font-weight: 700;
+        font-size: 18px;
+          &:hover {
+            color: var(--red);
+        }
+    }
+    .description {
+        text-indent: 20px;
+        margin: auto;
+        margin-top: 10px;
+        width: 80%;
+        color: white;
+        text-decoration: none;
+        font-family: 'Cherry Swash';
+        font-weight: 0;
+        font-size: 16px;
+        margin-bottom: 30px;
+    }
+  }
+  .top {
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 80px;
+    background-image: linear-gradient(var(--red),var(--brown)); 
+  p, button {
+    padding: 20px;
+    color: var(--white);
+    text-decoration: none;
+    font-family: 'Cherry Swash';
+    font-size: 20px;
+    background: none;
+    border-style: none;
+    font-weight: 0;
+    &:hover {
+         color: var(--black);
+         font-weight: 1000;
+     }
+  }
+  .prf {
+    margin-left: auto;
+  }
+  button {
+    cursor: pointer;
+    margin-left: auto;
+    margin-right: 10px;
+    font-size: 24px;
+  }
+  }
+  .card2 {
+    margin: 20px;
+    margin-left: 0;
+    border-radius: 10px;
+    border: 2px solid var(--black);
+    box-shadow: 0 10px 25px 5px rgba(244, 202, 202, 0.2);
+    background-image: linear-gradient(#151515,var(--black));
+    overflow: hidden;
+    height: 100%;
+    width: 0;
+    min-width: 96%;
+  }
+  
+  .all {
+    margin-left: -1px;
+    margin-top: 1px;
+    display: grid;
+    grid-template-columns: auto auto;
+  }
+
+  .card3 {
+    margin-bottom: 20px;
+    border-radius: 10px;
+    border: 2px solid var(--black);
+    box-shadow: 0 10px 25px 5px rgba(244, 202, 202, 0.2);
+    background-image: linear-gradient(#151515,var(--black));
+    overflow: hidden;
+    height: 100%;
+    width: 0;
+    min-width: 96%;
+  }
+
+.sections table tr td button {
+  text-align: left;
+  white-space: nowrap;
+  margin: 1px;
+  font-size: 18px;
+  font-weight: 450;
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
+  cursor: pointer;
+  background-color: var(--logo);
+  background-image: linear-gradient(var(--brown), var(--red));
+  border-style: none;
+  color: var(--white);
+  padding: 15px;
+  font-family: 'Cherry Swash';
+  i {
+    margin-right: 10px;
+    color: var(--logo);
+  }
+  &:hover {
+      color: var(--black);
+      font-weight: 1000;
+      background-image: none;
+      transition: 0.3s;
+      i {
+        color: var(--black);
+        font-weight: 1000;
+        background-image: none;
+        transition: 0.3s;
+      }
+  }
+}
+
+.second {
+  height: 100%;
+  width: 100%;
+}
+
+.sections table tr td {
+  padding: 0;
+  text-align: center;
+}
+
+
+.last {
+  border-radius: 0 0 0 5px;
+}
+
+.content {
+  text-indent: 20px;
+  color: var(--white);
+  text-decoration: none;
+  font-family: 'Cherry Swash';
+  font-weight: 0;
+  font-size: 16px;
+  padding: 20px;
+  -break: break-;
+  overflow-y: auto;
+  /*** astuce pour avoir height(content) follows height(sections)****/
+  height: 0;
+  min-height:100%;
+  /*************/
+}
+
+.content2 {
+  text-indent: 20px;
+  color: var(--white);
+  text-decoration: none;
+  font-family: 'Cherry Swash';
+  font-weight: 0;
+  font-size: 16px;
+  padding: 20px;
+  padding-top: 5px;
+  -break: break-;
+  display: grid;
+  grid-template-columns: auto auto auto;
+  grid-template-rows: auto auto;
+  justify-content: center;
+  p {
+    padding: 20px;
+    color: var(--white);
+    text-decoration: none;
+    font-family: 'Cherry Swash';
+    font-size: 20px;
+    font-weight: 0;
+  }
+}
+
+.progress{
+  position: relative;
+  margin: 10px;
+  text-align: center;
+  margin-top: 0;
+}
+.barOverflow { /* Wraps the rotating .bar */
+  position: relative;
+  margin: auto;
+  overflow: hidden; /* Comment this line to understand the trick */
+  width: 90px; height: 45px; /* Half circle (overflow) */
+  margin-bottom: -20px; /* bring the numbers up */
+}
+.bar{
+  position: absolute;
+  top: 0; left: 0;
+  width: 90px; height: 90px; /* full circle! */
+  border-radius: 50%;
+  box-sizing: border-box;
+  border: 10px solid var(--red);     /* half gray, */
+  border-bottom-color: var(--logo);  /* half azure */
+  border-right-color: var(--logo);
+}
+
+
+.content::-webkit-scrollbar {
+  width: 16px;
+}
+
+.content::-webkit-scrollbar-track {
+  border-radius: 8px;
+  background-color: var(--white);
+  border: 1px solid var(--logo);
+}
+
+.content::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+  border: 3px solid transparent;
+  background-clip: content-box;
+  background-image: linear-gradient(var(--red),var(--brown)); 
+}
+
+/* About Section */
+.about {
+  padding: 100px 0 20px 0;
+  text-align: center;
+  font-family: 'Cherry Swash';
+  margin: 0 auto;
+}
+
+.about h1 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
+
+.about-info {
+  margin: 2rem 2rem;
+  display: flex;
+  -break: break-;
+  margin: 40px;
+}
+/*
+.about-img {
+  margin-right: 40px;
+  margin-left: 40px;
+}
+
+.about-img img {
+  height: 180px;
+  border-radius: 5px;
+  object-fit: contain;
+  border: 2px solid var(--black);
+}
+*/
+.about-info {
+  font-size: 1.3rem;
+  margin: 0 8rem;
+  text-align: center;
+  text-indent: 50px;
+}
+
+button:focus {
+  outline: none;
+}
+
+.about-text ul {
+    text-align: left;
+    margin-left: 100px;
+    padding: 40px;
+    padding-bottom: 0;
+    font-weight: 600;
+}
+
+.about-text button {
+  border: none;
+  outline: 0;
+  padding: 10px 40px;
+  font-size: 18px;
+  margin: 50px 20px;
+  color: var(--white);
+  background-image: linear-gradient(var(--brown), var(--red));
+  cursor: pointer;
+  border-radius: 4px;
+  font-family: 'Cherry Swash';
+}
+
+.cardb button {
+  border: none;
+  outline: 0;
+  padding: 10px 20px;
+  margin: 2rem;
+  font-size: 1rem;
+  color: var(--white);
+  background-image: linear-gradient(var(--brown), var(--red));
+  cursor: pointer;
+  border-radius: 4px;
+  font-family: 'Cherry Swash';
+}
+
+
+/* Team Section */
+.team {
+  padding: 30px 0;
+  text-align: center;
+  font-family: 'Cherry Swash';
+  background: white;
+}
+
+.team h1 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
+
+.team-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 20px;
+}
+
+.cardb {
+  background-color: var(--white);
+  border-radius: 6px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+  width: 18rem;
+  height: 25rem;
+  margin-top: 10px;
+}
+
+.cardb:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.5);
+}
+
+.card-img {
+  width: 18rem;
+  height: 16rem;
+  overflow: hidden;
+}
+
+.card-img img {
+  width: 100%;
+}
+
+.card-info button {
+  margin: 2rem 1rem;
+}
+
+.card-name {
+  font-size: 2rem;
+  margin: 10px 0;
+}
+
+.card-role {
+  font-size: 1rem;
+  color: #888;
+  margin: 5px 0;
+}
+
+.card-email {
+  font-size: 1rem;
+  color: #555;
+}
+
+/* Footer */
+footer {
+  font-family: 'Cherry Swash';
+  background-color: var(--black);
+  color: var(--white);
+  text-align: center;
+  padding: 20px 0;
+  margin-top: auto;
+  width: 100%;
+}
+
+
+
+/****** Form *******/
+.center {
+  margin: auto;
+}
+.container {
+  font-family: 'Cherry Swash';
+  margin: auto;
+  background: rgba(0, 0, 0, 0);
+  width: 410px;
+  padding: 30px;
+  transition: all 0.3s ease;
+}
+.container .text2 {
+  font-size: 35px;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 50px;
+}
+.container form {
+  margin-top: -20px;
+  transition: all 0.3s ease;
+}
+.container form .data {
+  height: 45px;
+  width: 100%;
+  margin: 40px 0;
+}
+form .data label {
+  font-size: 18px;
+}
+form .data input {
+  height: 100%;
+  width: 100%;
+  padding-left: 10px;
+  font-size: 17px;
+  border: 1px solid var(--black);
+}
+form .forgot-pass {
+  margin-top: -8px;
+}
+form .forgot-pass a {
+  color: var(--brown);
+  text-decoration: none;
+}
+form .forgot-pass a:hover {
+  text-decoration: underline;
+}
+form .btn {
+  margin: 10px 0 10px 0;
+  height: 100%;
+  width: 100%;
+
+  position: relative;
+  overflow: hidden;
+}
+form .btn button {
+  height: 45px;
+  margin: auto;
+  margin-top: 10px;
+  background: none;
+  border: none;
+  color: var(--white);
+  background: var(--black);
+  font-size: 18px;
+  font-weight: 500;
+  text-transform: uppercase;
+  font-family: 'Cherry Swash';
+  letter-spacing: 1px;
+  cursor: pointer;
+  border-radius: 8px;
+  overflow: hidden;
+}
+form .signup-link {
+  text-align: center;
+}
+form .signup-link a {
+  color: var(--brown);
+  text-decoration: none;
+}
+form .signup-link a:hover {
+  text-decoration: underline;
+}
+
+.gsi-material-button {
+  margin: auto;
+  margin-top: 20px;
+  background-color: WHITE;
+  background-image: none;
+  border: 1px solid #747775;
+  -webkit-border-radius: 20px;
+  border-radius: 20px;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  color: #1f1f1f;
+  cursor: pointer;
+  font-family: 'Roboto', arial, sans-serif;
+  font-size: 14px;
+  height: 40px;
+  letter-spacing: 0.25px;
+  outline: none;
+  overflow: hidden;
+  padding: 0 12px;
+  position: relative;
+  text-align: center;
+  -webkit-transition: background-color .218s, border-color .218s, box-shadow .218s;
+  transition: background-color .218s, border-color .218s, box-shadow .218s;
+  vertical-align: middle;
+  white-space: nowrap;
+  width: auto;
+  max-width: 400px;
+  min-width: min-content;
+}
+
+.gsi-material-button .gsi-material-button-icon {
+  height: 20px;
+  margin-right: 12px;
+  min-width: 20px;
+  width: 20px;
+}
+
+.gsi-material-button .gsi-material-button-content-wrapper {
+  -webkit-align-items: center;
+  align-items: center;
+  display: flex;
+  -webkit-flex-direction: row;
+  flex-direction: row;
+  -webkit-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+  height: 100%;
+  justify-content: space-between;
+  position: relative;
+  width: 100%;
+}
+
+.gsi-material-button .gsi-material-button-contents {
+  -webkit-flex-grow: 1;
+  flex-grow: 1;
+  font-family: 'Roboto', arial, sans-serif;
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: top;
+}
+
+.gsi-material-button .gsi-material-button-state {
+  -webkit-transition: opacity .218s;
+  transition: opacity .218s;
+  bottom: 0;
+  left: 0;
+  opacity: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.gsi-material-button:disabled {
+  cursor: default;
+  background-color: #ffffff61;
+  border-color: #1f1f1f1f;
+}
+
+.gsi-material-button:disabled .gsi-material-button-contents {
+  opacity: 38%;
+}
+
+.gsi-material-button:disabled .gsi-material-button-icon {
+  opacity: 38%;
+}
+
+.gsi-material-button:not(:disabled):active .gsi-material-button-state, 
+.gsi-material-button:not(:disabled):focus .gsi-material-button-state {
+  background-color: #303030;
+  opacity: 12%;
+}
+
+.gsi-material-button:not(:disabled):hover {
+  -webkit-box-shadow: 0 1px 2px 0 rgba(60, 64, 67, .30), 0 1px 3px 1px rgba(60, 64, 67, .15);
+  box-shadow: 0 1px 2px 0 rgba(60, 64, 67, .30), 0 1px 3px 1px rgba(60, 64, 67, .15);
+}
+.gsi-material-button:not(:disabled):hover .gsi-material-button-state {
+  background-color: #303030;
+  opacity: 8%;
+}
+
+/**** arrows ****/
+
+.main-container {
+  .card {
+    margin: 0;
+    margin-bottom: 10px;
+  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+
+.main-container button {
+  margin: 0 20px;
+  background: none;
+  border-style: none;
+  padding: 20px;
+  cursor: pointer;
+  &:hover {
+    .arrow {
+      border: solid var(--black);
+      border-width: 0 10px 10px 0;
+      display: inline-block;
+    }
+  }
+}
+
+.arrow {
+  border: solid var(--brown);
+  border-radius: 10px;
+  border-width: 0 10px 10px 0;
+  display: inline-block;
+  padding: 20px;
+}
+
+.right {
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+}
+
+.left {
+  transform: rotate(135deg);
+  -webkit-transform: rotate(135deg);
+}
+
+
+.card4 {
+  margin: 20px auto;
+  border-radius: 10px;
+  border: 2px solid var(--black);
+  box-shadow: 0 10px 25px 5px rgba(244, 202, 202, 0.2);
+  background-image: linear-gradient(#151515,var(--black));
+  overflow: hidden;
+  height: 100%;
+  width: 0;
+  min-width: 65%;
+}
+
+.content3 {
+  text-indent: 20px;
+  color: var(--white);
+  text-decoration: none;
+  font-family: 'Cherry Swash';
+  font-weight: 0;
+  font-size: 16px;
+  -break: break-;
+  overflow-y: auto;
+  height: auto;
+  max-height: 100vh;
+  width: 100%;
+}
+
+.space {
+  margin-bottom: 10px;
+  width: 100%;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.meetup {
+  border: none;
+  margin: 10px auto;
+  outline: 0;
+  padding: 10px 25px;
+  font-size: 18px;
+  color: var(--white);
+  background-image: linear-gradient(var(--brown), var(--red));
+  cursor: pointer;
+  border-radius: 4px;
+  font-family: 'Cherry Swash';
+}
+
+.sections3 table {
+  cursor: pointer;
+  margin-top: 2px;
+  border: 1px solid var(--black);
+  border-collapse: collapse;
+  width: 100%;
+  text-align: center;
+}
+
+.sections3 table tr td {
+    border: 1px solid white;
+    padding: 20px;
+}
+
+.firstly {
+  width: 100%;
+  background-color: var(--black);
+}
+
+.secondary {
+  white-space: nowrap;
+}
+
+.ongoing {
+  color: greenyellow;
+  transition: all 3s ease;
+}
+.pending {
+  color: orange;
+  transition: all 3s ease;
+}
+.done {
+  color: red;
+  transition: all 3s ease;
+}
+
+.search {
+  background-color: var(--logo);
+  color: var(--black);
+    padding: 10px;
+    font-size: 17px;
+    border: 2px solid var(--black);
+    border-radius: 10px;
+    text-align: center;
+  &::placeholder {
+    color: rgba(50, 50, 50, 0.8);
+  }
+}
+
+.tools {
+  margin-top: auto;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  * {
+    margin: 5px;
+    font-family: "Cherry Swash";
+    font-weight: 1000;
+  }
+  button {
+    border: none;
+    outline: 0;
+    padding: 10px;
+    font-size: 1rem;
+    color: var(--white);
+    background-color: var(--black);
+    background-image: linear-gradient(var(--brown), var(--red));
+    cursor: pointer;
+    border-radius: 4px;
+    font-family: 'Cherry Swash';
+    border: 2px solid var(--black);
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+    &:hover {
+      color: var(--white);
+      background-image: none;
+      border-color: var(--white);
+      transition: 0.5s ease-in-out;
+    }
+  }
+}
+
+
+.content3::-webkit-scrollbar {
+  width: 16px;
+}
+
+.content3::-webkit-scrollbar-track {
+  border-radius: 8px;
+  background-color: var(--white);
+  border: 1px solid var(--logo);
+}
+
+.content3::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+  border: 3px solid transparent;
+  background-clip: content-box;
+  background-image: linear-gradient(var(--red),var(--brown)); 
+}
+
+
+.selected {
+  color: var(--black);
+  -break: break-;
+  font-weight: 0;
+    td {
+      span {
+        color: var(--black);
+        transition: 3s;
+      }
+    }
+  .firstly {
+    background-color: rgb(242, 195, 156);
+  }
+  .secondary {
+    background-color: var(--logo);
+  }
+}
+
+
+label {
+  margin-bottom: 8px;
+  margin-top: 30px;
+  font-size: 24px;
+  display: block;
+}
+
+
+.form {
+  text-align: center;
+  font-family: 'Cherry Swash';
+  font-weight: 700;
+  font-size: 18px;
+  display: block;
+
+  button {
+    text-align: left;
+  white-space: nowrap;
+  margin: 1px;
+  font-size: 18px;
+  font-weight: 450;
+  text-decoration: none;
+  cursor: pointer;
+  background-color: var(--logo);
+  background-image: linear-gradient(var(--brown), var(--red));
+  border: 2px solid black;
+  color: var(--white);
+  margin-bottom: 30px;
+  padding: 15px;
+  font-family: 'Cherry Swash';
+  i {
+    margin-right: 10px;
+    color: var(--logo);
+  }
+  &:hover {
+      color: var(--black);
+      font-weight: 1000;
+      background-image: none;
+      transition: 0.3s;
+      i {
+        color: var(--black);
+        font-weight: 1000;
+        background-image: none;
+        transition: 0.3s;
+      }
+  }
+  }
+}
+
+textarea {
+  display: block;
+  width: 1000px;
+  height: 150px;
+  resize: vertical;
+  padding: 20px;
+  border-radius: 10px;
+  border: 2px solid black;
+  box-shadow: 0 10px 25px 5px rgba(244, 202, 202, 0.2);
+  margin: auto;
+  margin-bottom: 30px;
+  
+  font-family: 'Cherry Swash';
+  font-weight: 700;
+  font-size: 18px;
+}

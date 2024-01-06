@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="res/images/icon.ico">
+  <link href="/css/style.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <title>NeWind™</title>
+</head>
+
+<body>
+  <nav>
+    <div class="navbar">
+      <div class="logo"><a href="#">NeWind™</a></div>
+      <ul class="nav-links">
+        <li><a href="profile">Profile</a></li>
+        <li><a href="discover">Discover</a></li>
+        <li><a href="meet">Meet</a></li>
+        <li><a href="/">About</a></li>
+      </ul>
+      <button class="mobile"><i class="fa fa-bars"></i></button>
+      <div class="profile">
+        <button class="escape"><i class="fa fa-power-off"></i></button>
+        <button class="log"><i class="fa fa-key"></i></button>
+      </div>
+    </div>
+    <div class="deco"></div>
+  </nav>
+  <div class="center">
+    <div class="container">
+      <div class="text2">Sign up</div>
+      <!-- Display flash messages for errors -->
+      <% if (messages.error) { %>
+        <div class="error-message" style="color: var(--red); text-align:center;">
+            <%= messages.error %>
+        </div>
+      <% } %>
+
+      <form action="/register" method="POST">
+        <div class="data">
+          <label for="username">Account Name</label>
+          <input type="text" name="username" id="username" required />
+        </div>
+        <div class="data">
+          <label for="email">Email</label>
+          <input type="email" name="email" id="email" required />
+        </div>
+        <div class="data">
+          <label for="password">Password</label>
+          <input type="password" name="password" id="password" required />
+        </div>
+        <div class="btn">
+          <button class="btn" type="submit">Sign up</button>
+        </div>
+      </form>
+    </div>
+
+  </div>
+  </div>
+  <footer>
+    <p>© 2023 NeWind™. All Rights Reserved.</p>
+  </footer>
+</body>
+<script type="text/javascript " src="/js/script.js "></script>
+
+</html>

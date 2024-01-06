@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" href="res/images/icon.ico">
+        <link href="/css/style.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <title>NeWind™</title>
+    </head>
+    <body>
+        <div id="userData" data-user="<%= JSON.stringify(user) %>"></div>
+        <nav>
+            <div class="navbar">
+                <div class="logo">
+                    <a href="#">NeWind™</a>
+                </div>
+                <ul class="nav-links">
+                    <li>
+                        <a href="profile">Profile</a>
+                    </li>
+                    <li>
+                        <a href="discover">Discover</a>
+                    </li>
+                    <li>
+                        <a href="meet">Meet</a>
+                    </li>
+                    <li>
+                        <a href="/">About</a>
+                    </li>
+                </ul>
+                <button class="mobile">
+                    <i class="fa fa-bars"></i>
+                </button>
+                <div class="profile">
+                    <button class="escape">
+                        <i class="fa fa-power-off"></i>
+                    </button>
+                    <button class="log">
+                        <i class="fa fa-key"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="deco"></div>
+        </nav>
+        
+
+        <form class="form" action="/updateprofile" method="post">
+          <!-- Profile Image -->
+          <label for="profileImage">Profile Image</label>
+          <input type="file" id="profileImage" name="profileImage" accept="image/*">
+  
+          <!-- Bio -->
+          <label for="bio">Bio</label>
+          <textarea id="bio" name="bio"><%= user.bio %></textarea>
+  
+          <!-- Marital Status -->
+          <label for="maritalStatus">Marital Status</label>
+          <textarea id="maritalStatus" name="maritalStatus"><%= user.marital %></textarea>
+  
+          <!-- Professional Status -->
+          <label for="professionalStatus">Professional Status</label>
+          <textarea id="professionalStatus" name="professionalStatus"><%= user.professional %></textarea>
+  
+          <!-- Goal -->
+          <label for="goal">Goal</label>
+          <textarea id="goal" name="goal"><%= user.goal %></textarea>
+  
+          <!-- Hobbies -->
+          <label for="hobbies">Hobbies</label>
+          <textarea id="hobbies" name="hobbies"><%= user.hobbies %></textarea>
+  
+          <!-- Contact -->
+          <label for="contact">Contact</label>
+          <textarea id="contact" name="contact"><%= user.contact %></textarea>
+  
+          <!-- Submit button -->
+          <button type="submit">Update Profile</button>
+      </form>
+</body>
+<script type="text/javascript " src="/js/script.js "></script>
+</html>
