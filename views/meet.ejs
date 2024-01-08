@@ -11,6 +11,10 @@
 </head>
 
 <body>
+  
+  <div id="userData" data-user='<%= JSON.stringify(user) %>'></div>
+  <div id="meetingsData" data-meetings='<%= JSON.stringify(meetings) %>'></div>
+  
   <nav>
     <div class="navbar">
       <div class="logo"><a href="#">NeWind™</a></div>
@@ -22,6 +26,13 @@
       </ul>
       <button class="mobile"><i class="fa fa-bars"></i></button>
       <div class="profile">
+        <% if (isAuthenticated) { %>
+          <!-- Green circle for authenticated -->
+          <div class="circle green"></div>
+        <% } else { %>
+          <!-- Red circle for not authenticated -->
+          <div class="circle red"></div>
+        <% } %>
         <button class="escape"><i class="fa fa-power-off"></i></button>
         <button class="log"><i class="fa fa-key"></i></button>
       </div>
@@ -37,10 +48,19 @@
     <div class="content3">
       <div class="sections3">
         <table>
-          <tr>
-            <td class="firstly">#</td>
-            <td class="secondary">Status: <span>#</span></td>
-          </tr>
+          <% meetings.forEach(meeting => { %>
+            <tr>
+              <td class="personName">
+                <% if (meeting.receiver === user.username) { %>
+                <%= meeting.sender %>
+              <% } else { %>
+                <%= meeting.receiver %>
+              <% } %></td>
+              <td class="location"><%= meeting.location %></td>
+              <td class="date"><%= meeting.date.toDateString() %></td>
+              <td class="status"><span><%= meeting.status %></span></td>
+            </tr>
+          <% }); %>
         </table>
       </div>
     </div>
@@ -53,5 +73,10 @@
   </div>
 </body>
 <script type="text/javascript " src="/js/script.js "></script>
-
+<script>
+  window.onload = function() {
+    updateMeetView();
+    updateStatuses();
+  }
+</script>
 </html>

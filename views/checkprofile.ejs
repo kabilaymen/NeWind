@@ -11,8 +11,7 @@
 </head>
 
 <body>
-  
-<div id="userData" data-user='<%= JSON.stringify(user) %>'></div>
+  <div id="userData" data-user='<%= JSON.stringify(user) %>'></div>
 
   <nav>
     <div class="navbar">
@@ -40,7 +39,7 @@
   </nav>
 
   <div class="infos">
-    <div onclick="location.href='discover';" class="card">
+    <div onclick="getBack()" class="card">
       <div class="top"></div>
       <div class="avatar-holder">
         <!-- Check if profileImage exists before rendering the image -->
@@ -62,12 +61,14 @@
     <div class="second">
       <div class="card2">
         <div class="top">
-          <p class="prf">
+          <p class="prf" style="margin: auto;">
             Your Profile
           </p>
+          <!--
           <button onclick="location.href='edit'">
             <i class="fa fa-edit"></i>
           </button>
+          -->
         </div>
         <div class="all">
           <div class="sections">
@@ -94,6 +95,7 @@
           </div>
         </div>
       </div>
+      <!--
       <div class="card3">
         <div class="top">
           <p>
@@ -124,9 +126,14 @@
           </div>
         </div>
       </div>
+      -->
     </div>
   </div>
 </body>
 <script type="text/javascript " src="/js/script.js "></script>
-
+<script>
+document.addEventListener('keydown', async (event) => {
+  if (event.key === " ") getBack();
+});
+</script>
 </html>

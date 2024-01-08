@@ -51,52 +51,44 @@
             <div class="deco"></div>
         </nav>
         
-
-        <form class="form" action="/updateprofile" method="post" enctype="multipart/form-data">
-          <!-- Profile Image -->
-          <label for="profileImage">Profile Image</label>
-          <input type="file" id="profileImage" name="profileImage" accept="image/*">
-  
-          <div id="agegender">
-            <!-- Age -->
-            <label class="ag" for="age">Age</label>
-            <input type="number" id="age" name="age" value="<%= user.age %>" min="0" max="99">
-
-            <!-- Gender -->
-            <label class="gen" for="gender">Gender</label>
-            <select id="gender" name="gender">
-              <option value="M" <%= user.gender === 'M' ? 'selected' : '' %>>Male</option>
-              <option value="F" <%= user.gender === 'F' ? 'selected' : '' %>>Female</option>
-            </select>
-          </div>
-
-          <!-- Bio -->
-          <label for="bio">Bio</label>
-          <textarea id="bio" name="bio"><%= user.bio %></textarea>
-  
-          <!-- Marital Status -->
-          <label for="marital">Marital Status</label>
-          <textarea id="marital" name="marital"><%= user.marital %></textarea>
-  
-          <!-- Professional Status -->
-          <label for="professional">Professional Status</label>
-          <textarea id="professional" name="professional"><%= user.professional %></textarea>
-  
-          <!-- Goal -->
-          <label for="goal">Goal</label>
-          <textarea id="goal" name="goal"><%= user.goal %></textarea>
-  
-          <!-- Hobbies -->
-          <label for="hobbies">Hobbies</label>
-          <textarea id="hobbies" name="hobbies"><%= user.hobbies %></textarea>
-  
-          <!-- Contact -->
-          <label for="contact">Contact</label>
-          <textarea id="contact" name="contact"><%= user.contact %></textarea>
-  
-          <!-- Submit button -->
-          <button type="submit">Update Profile</button>
-      </form>
+        
+        <!-- Display flash messages for errors -->
+        <% if (messages.error) { %>
+            <div class="error-message" style="color: var(--red); text-align:center; margin-top: 40px; margin-bottom: -20px; font-weight: 1000px;">
+                <%= messages.error %>
+            </div>
+        <% } %>
+        <form class="form" action="/meetingrequested" method="post">
+            <!-- Meet Date -->
+            <label for="meetDate">Meet Date</label>
+            <input type="date" id="meetDate" name="meetDate" value="" onload="getCurrentDate()">
+          
+            <!-- Location -->
+            <label for="location">Location</label>
+            <input type="text" id="location" name="location">
+          
+            <!-- Submit button -->
+            <button type="submit" style="display:block; margin: auto; margin-top: 20px;">Request meeting</button>
+          
+            <script>
+              function getCurrentDate() {
+                const currentDate = new Date();
+                const year = currentDate.getFullYear();
+                let month = currentDate.getMonth() + 1;
+                let day = currentDate.getDate();
+          
+                // Pad single-digit month and day with leading zeros
+                month = month < 10 ? `0${month}` : month;
+                day = day < 10 ? `0${day}` : day;
+          
+                const formattedDate = `${year}-${month}-${day}`;
+                document.getElementById('meetDate').value = formattedDate;
+              }
+          
+              // Call the function when the document is ready
+              document.addEventListener('DOMContentLoaded', getCurrentDate);
+            </script>
+        </form>
 </body>
 <script type="text/javascript " src="/js/script.js "></script>
 </html>

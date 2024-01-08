@@ -856,26 +856,22 @@ form .signup-link a:hover {
     padding: 20px;
 }
 
-.firstly {
-  width: 100%;
+.personName {
   background-color: var(--black);
 }
 
-.secondary {
+.status, .location, .date {
   white-space: nowrap;
 }
 
 .ongoing {
   color: greenyellow;
-  transition: all 3s ease;
 }
-.pending {
+.requested {
   color: orange;
-  transition: all 3s ease;
 }
-.done {
+.done, .cancelled {
   color: red;
-  transition: all 3s ease;
 }
 
 .search {
@@ -954,24 +950,26 @@ form .signup-link a:hover {
         transition: 3s;
       }
     }
-  .firstly {
+  .personName {
     background-color: rgb(242, 195, 156);
   }
-  .secondary {
+  .status, .location, .date {
     background-color: var(--logo);
   }
 }
 
 
-label {
+.form label {
   margin-bottom: 8px;
   margin-top: 30px;
   font-size: 24px;
   display: block;
+  color: var(--red);
 }
 
 
 .form {
+  margin-top: 10px;
   text-align: center;
   font-family: 'Cherry Swash';
   font-weight: 700;
@@ -989,6 +987,7 @@ label {
   background-color: var(--logo);
   background-image: linear-gradient(var(--brown), var(--red));
   border: 2px solid black;
+  border-radius: 15px;
   color: var(--white);
   margin-bottom: 30px;
   padding: 15px;
@@ -1023,8 +1022,69 @@ textarea {
   box-shadow: 0 10px 25px 5px rgba(244, 202, 202, 0.2);
   margin: auto;
   margin-bottom: 30px;
+  color: var(--black);
   
   font-family: 'Cherry Swash';
-  font-weight: 700;
+  font-weight: 600;
   font-size: 18px;
+}
+
+#age, #gender, #profileImage, #location, #meetDate {
+  border-radius: 10px;
+  border: 2px solid black;
+  box-shadow: 0 10px 25px 5px rgba(244, 202, 202, 0.2);
+  padding: 20px;
+  font-family: 'Cherry Swash';
+  color: var(--black);
+  font-weight: 600;
+  font-size: 18px;
+  width: 100px;
+}
+
+#agegender {
+  display: flex;
+  justify-content: center;
+  padding-top: 20px;
+  .ag {
+    margin-right: 10px;
+  }
+  .gen {
+    margin-left: 40px;
+    margin-right: 10px;
+  }
+  margin-left: -20px;
+  margin-bottom: 40px;
+  margin-top: 20px;
+}
+
+#age {
+  text-align: center;
+}
+
+#gender, #profileImage, #location, #meetDate {
+  width: auto;
+}
+
+#profileImage {
+  padding: 10px;
+  text-align: right;
+}
+
+
+.circle {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  margin-bottom: -3px;
+  display: inline-block;
+  margin-right: 0px;
+  border: 4px solid var(--black);
+}
+
+.green {
+  background-color: rgb(36, 160, 36);
+}
+
+.red {
+  background-color: red;
 }

@@ -11,6 +11,8 @@
 </head>
 
 <body>
+  <div id="userData" data-user='<%= JSON.stringify(user) %>'></div>
+
   <nav>
     <div class="navbar">
       <div class="logo"><a href="#">NeWind™</a></div>
@@ -22,6 +24,13 @@
       </ul>
       <button class="mobile"><i class="fa fa-bars"></i></button>
       <div class="profile">
+        <% if (isAuthenticated) { %>
+          <!-- Green circle for authenticated -->
+          <div class="circle green"></div>
+        <% } else { %>
+          <!-- Red circle for not authenticated -->
+          <div class="circle red"></div>
+        <% } %>
         <button class="escape"><i class="fa fa-power-off"></i></button>
         <button class="log"><i class="fa fa-key"></i></button>
       </div>
@@ -30,25 +39,35 @@
   </nav>
   <div class="space"></div>
   <div class="main-container">
-    <button><i class="arrow left"></i></button>
-    <div onclick="location.href='profile';" class="card">
+    <button onclick="showPreviousProfile()"><i class="arrow left"></i></button>
+    <div onclick="location.href='checkprofile';" class="card">
       <div class="top"></div>
       <div class="avatar-holder">
-        <img src="#" alt="Profile image">
+          <img src="/images/default.png" alt="Default Profile Image">
       </div>
       <div class="name">
-
       </div>
       <div class="description">
-
       </div>
     </div>
-    <button><i class="arrow right"></i></button>
+    <button onclick="showNextProfile()"><i class="arrow right"></i></button>
   </div>
-  <button onclick="location.href='meet';" class="meetup">Wanna meet up?</button>
+  <button onclick="location.href='meetdetails';" class="meetup">Wanna meet up?</button>
   <div class="space">
   </div>
 </body>
 <script type="text/javascript " src="/js/script.js "></script>
+<script>
+  window.onload = async function() {
+    await fetchCurrentId();
+    currentProfileIndex = currentId;
+    showProfile(currentProfileIndex);
+  };
+    document.addEventListener('keydown', async (event) => {
+      if (event.keyCode === 37) showPreviousProfile();
+      if (event.keyCode === 39) showNextProfile();
+      if (event.key === " ") location.href='checkprofile';
+    });
+</script>
 
 </html>
