@@ -56,6 +56,7 @@ async function fetchCurrentId () {
 async function showProfile (index) {
   const profileName = document.querySelector('.name')
   const profileInfo = document.querySelector('.description')
+  const profileImage = document.querySelector('.avatar-holder img')
 
   try {
     // Fetch a specific profile by index from the server
@@ -66,6 +67,9 @@ async function showProfile (index) {
       const userProfile = data.userProfile
 
       // Update the profile card with the fetched data
+      profileImage.src = '/images/default.png'
+      if (userProfile.profileImage) profileImage.src = userProfile.profileImage
+
       profileName.textContent = `${userProfile.username} (${userProfile.gender}${userProfile.age})`
       profileInfo.textContent = userProfile.bio
     } else {
@@ -128,9 +132,9 @@ document.querySelector('.escape').onclick = function () {
 let val = document.querySelector('.search')
 function doesntMatch (part, ele) {
   let text1 = part.toLowerCase().trim()
-  let text2 = ele.textContent.toLowerCase().trim();
-  let x = text1.length;
-  if (x > text2.length) x = text2.length;
+  let text2 = ele.textContent.toLowerCase().trim()
+  let x = text1.length
+  if (x > text2.length) x = text2.length
   for (let i = 0; i < x; i++) {
     if (text1[i] !== text2[i]) return true
   }
@@ -139,21 +143,21 @@ function doesntMatch (part, ele) {
 let bin = []
 
 if (val)
-val.oninput = function () {
-  let elements = document.querySelectorAll('.card4 table tr')
-  for (let i = 0; i < elements.length; i++) {
-    let ele = elements[i]
-    if (!bin.includes(ele)) ele.style.display = 'table-row'
-    let parts = val.value.split(':')
-    if (doesntMatch(parts[0], ele.querySelector('.personName'))) {
-      ele.style.display = 'none'
-    }
-    if (parts.length > 1) {
-      if (doesntMatch(parts[1], ele.querySelector('.status')))
+  val.oninput = function () {
+    let elements = document.querySelectorAll('.card4 table tr')
+    for (let i = 0; i < elements.length; i++) {
+      let ele = elements[i]
+      if (!bin.includes(ele)) ele.style.display = 'table-row'
+      let parts = val.value.split(':')
+      if (doesntMatch(parts[0], ele.querySelector('.personName'))) {
         ele.style.display = 'none'
+      }
+      if (parts.length > 1) {
+        if (doesntMatch(parts[1], ele.querySelector('.status')))
+          ele.style.display = 'none'
+      }
     }
   }
-}
 
 let selected = null
 const updateMeetView = () => {
@@ -292,8 +296,8 @@ function propagateStatus (otherguy, meeting, status) {
     .catch(error => console.error('Error propagating:', error))
 }
 
-function updateMeetings (savedMeetObjects) {
-  fetch('/updatemeetings', {
+async function updateMeetings (savedMeetObjects) {
+  await fetch('/updatemeetings', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -353,8 +357,7 @@ if (acc)
           })
         }
 
-        updateMeetings(savedMeetObjects)
-        await new Promise(resolve => setTimeout(resolve, 500)); // Adjust the delay time as needed
+        await updateMeetings(savedMeetObjects)
         location.href = 'meet'
       }
 
@@ -404,20 +407,20 @@ if (acc)
           })
         }
 
-        updateMeetings(savedMeetObjects)
-        await new Promise(resolve => setTimeout(resolve, 500)); // Adjust the delay time as needed
+        await updateMeetings(savedMeetObjects)
         location.href = 'meet'
       }
     }
   }
 
-function updateStatuses () {
+async function updateStatuses () {
   var userDataElement = document.getElementById('userData')
   var userData = JSON.parse(userDataElement.getAttribute('data-user'))
 
   const allRows = document.querySelectorAll('.card4 table tr')
   let savedMeetObjects = []
 
+  let flagged = false
   for (let i = 0; i < allRows.length; i++) {
     const row = allRows[i]
     let testing = lookFor(row).sender.trim() === userData.username.trim()
@@ -426,7 +429,10 @@ function updateStatuses () {
     let dateValue = new Date(row.querySelector('.date').textContent)
 
     let now = new Date()
-    if (dateValue < now) statusValue = 'Done'
+    if (dateValue < now) {
+      if (statusValue !== 'Done') flagged = true
+      statusValue = 'Done'
+    }
 
     let sender = testing
       ? userData.username.trim()
@@ -444,5 +450,6 @@ function updateStatuses () {
     })
   }
 
-  updateMeetings(savedMeetObjects)
+  await updateMeetings(savedMeetObjects)
+  if (flagged) location.href = 'meet'
 }
