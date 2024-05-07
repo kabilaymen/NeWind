@@ -14,6 +14,9 @@ import multer from 'multer'
 import moment from 'moment'
 import e from 'connect-flash'
 import cors from 'cors'
+import rateLimit from 'express-rate-limit'
+import { body, validationResult } from 'express-validator'
+import helmet from 'helmet'; // Optional: For additional security headers
 
 var mod = function (n, m) {
   var remain = n % m
@@ -82,19 +85,58 @@ passport.serializeUser(User.serializeUser())
 passport.deserializeUser(User.deserializeUser())
 
 // Middleware
+
+// Set up rate limiter
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // In milliseconds
+  max: 1000, // Limit each IP to X requests per window
+  standardHeaders: true,
+  legacyHeaders: false,
+  handler: (request, response, next, options) => {
+		if (request.rateLimit.used === request.rateLimit.limit + 1) {
+      console.log(`Rate limit reached for IP: ${request.ip}`);
+		}
+		response.status(options.statusCode).send(options.message)
+	}
+});
+
+// Custom middleware to track request count and log it to the console
+let requestCount = 0;
+app.use((req, res, next) => {
+  requestCount += 1;
+  // console.log(`Total requests received: ${requestCount}`);
+  next(); // Continue to the next middleware/route handler
+});
+
+// Apply rate limiter to all requests
+app.use(limiter);
+
+// Optional: Use Helmet to set additional security headers
+app.use(helmet());
+
 app.use(flash())
 app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static('public'))
 app.use(bodyParser.urlencoded({ extended: true }))
+
+// Configure the session middleware
 app.use(
   session({
     secret: secret,
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
+    cookie: {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'lax',
+      path: '/',
+      maxAge: 24 * 60 * 60 * 1000, // Set cookie expiration to 24 hours
+    },
   })
-)
+);
+
 app.use(passport.initialize())
 app.use(passport.session())
 
@@ -230,25 +272,36 @@ app.post('/processlogin', (req, res, next) => {
   })(req, res, next)
 })
 
+// Middleware for input validation and sanitization
+const validateProfileUpdate = [
+  body('bio').optional().isString().trim().escape(),
+  body('age').optional().isInt({ min: 0 }).toInt(),
+  body('gender').optional().isIn(['male', 'female', 'other']),
+  body('marital').optional().isIn(['single', 'married', 'divorced', 'widowed']),
+  body('professional').optional().isString().trim().escape(),
+  body('goal').optional().isString().trim().escape(),
+  body('hobbies').optional().isString().trim().escape(),
+  body('contact').optional().isString().trim().escape(),
+];
+
 // Handle POST request to /updateprofile
-app.post('/updateprofile', upload.single('profileImage'), async (req, res) => {
-  if (!req.user) {
-    return res.redirect('/login')
+app.post('/updateprofile', upload.single('profileImage'), validateProfileUpdate, async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ success: false, errors: errors.array() });
   }
+
+  if (!req.user) {
+    return res.redirect('/login');
+  }
+
   try {
-    // Access the fields submitted in the form
-    const { bio, age, gender, marital, professional, goal, hobbies, contact } =
-      req.body
+    const { bio, age, gender, marital, professional, goal, hobbies, contact } = req.body;
 
-    // Access the uploaded profile image path
-    let npath = null
-    if (req.file) npath = req.file.path.slice(6)
-    const profileImagePath = req.file ? npath : null
+    const profileImagePath = req.file ? req.file.path.slice(8) : null;
 
-    // Get the current user's ID (assuming you have authentication middleware)
-    const userId = req.user._id
+    const userId = req.user._id;
 
-    // Update user data in the database
     const updatedUserData = {
       profileImage: profileImagePath,
       age,
@@ -259,16 +312,16 @@ app.post('/updateprofile', upload.single('profileImage'), async (req, res) => {
       goal,
       hobbies,
       contact
-    }
+    };
 
-    await User.findByIdAndUpdate(userId, updatedUserData)
+    await User.findByIdAndUpdate(userId, updatedUserData, { new: true });
 
-    res.redirect('/profile') // Redirect to the user's profile page
+    res.redirect('/profile');
   } catch (error) {
-    console.error(error)
-    res.status(500).send('Internal Server Error')
+    console.error(error);
+    res.status(500).json({ success: false, message: 'Internal Server Error' });
   }
-})
+});
 
 app.get('/logout', (req, res) => {
   req.logout(function (err) {
@@ -422,41 +475,57 @@ app.post('/updatemeetings', async (req, res) => {
   }
 })
 
+// Middleware for input validation and sanitization
+const validateInput = [
+  body('otherguy').isString().trim().escape(),
+  body('meeting.date').isISO8601().toDate(),
+  body('meeting.sender').isString().trim().escape(),
+  body('meeting.receiver').isString().trim().escape(),
+  body('status').isString().trim().escape(),
+];
 
-app.post('/propagatestatus', async (req, res) => {
-  if (!req.user) {
-    return res.redirect('/login')
+// Endpoint with input validation middleware
+app.post('/propagatestatus', validateInput, async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ success: false, errors: errors.array() });
   }
-  try {
-    let other = await User.findOne({ username: req.body.otherguy });
 
-    for (let i = 0; i < other.meetingList.length; i++) {
-      let meet = other.meetingList[i];
-      // Extract day, month, and year components for comparison
-      let selectedDateComponents = `${meet.date.getDate()}/${
-        meet.date.getMonth() + 1
-      }/${meet.date.getFullYear()}`
-      let meetingDateComponents = `${new Date(req.body.meeting.date).getDate()}/${
-        new Date(req.body.meeting.date).getMonth() + 1
-      }/${new Date(req.body.meeting.date).getFullYear()}`
-      
-      if (meet.sender === req.body.meeting.sender && meet.receiver === req.body.meeting.receiver && meetingDateComponents === selectedDateComponents) {
+  if (!req.user) {
+    return res.redirect('/login');
+  }
+
+  try {
+    const other = await User.findOne({ username: req.body.otherguy });
+    if (!other) {
+      return res.status(404).json({ success: false, message: 'User not found' });
+    }
+
+    const targetMeetingDate = new Date(req.body.meeting.date);
+    let meetingUpdated = false;
+
+    for (let meet of other.meetingList) {
+      if (
+        meet.sender === req.body.meeting.sender &&
+        meet.receiver === req.body.meeting.receiver &&
+        meet.date.toDateString() === targetMeetingDate.toDateString()
+      ) {
         meet.status = req.body.status;
+        meetingUpdated = true;
         break;
       }
     }
 
+    if (!meetingUpdated) {
+      return res.status(404).json({ success: false, message: 'Meeting not found' });
+    }
 
-    // Save the updated user object to MongoDB
-    await other.save()
+    await other.save();
 
-    // Send a JSON response indicating success
-    res.json({ success: true, message: 'Propagated successfully' })
+    res.json({ success: true, message: 'Propagated successfully' });
   } catch (error) {
-    console.error('Error propagating:', error)
-
-    // Send a JSON response indicating an error
-    res.status(500).json({ success: false, message: 'Internal Server Error' })
+    console.error('Error propagating:', error);
+    res.status(500).json({ success: false, message: 'Internal Server Error' });
   }
 })
 
